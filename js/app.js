@@ -1,4 +1,4 @@
- var app = angular.module('tokenKidApp', []);
+ var app = angular.module('tokenKidApp', ['ngRoute']);
 
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope) {
