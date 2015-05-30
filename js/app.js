@@ -70,7 +70,16 @@ app.controller('mainController', function($scope) {
     };
     
     $scope.deleteClicked = function(kid) {
-        $scope.kids = $scope.kids.splice($scope.kids.indexOf(kid), 1);
+        
+        for (kidId in this.kids) {
+            var thisKid = this.kids[kidId];
+            if(thisKid == kid)
+            {
+                delete this.kids[kidId];
+                break;
+            }
+        }
+        
         this.updateDatabase();
     };
     
