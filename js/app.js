@@ -46,16 +46,17 @@ app.controller('mainController', function($scope) {
     
     $scope.addKidClicked = function() {
         this.showKidForm = true;
-        document.getElementById("kidNameField").focus();
+        setTimeout(function(){document.getElementById("kidNameField").focus();}, 100);
         return false;
     };
     
     $scope.addKidSubmitted = function() {
         this.showKidForm = false;
         var kid = { name: this.newKidName, points: 0 };
-        $scope.kids.push(kid);
-        this.newKidName = '';
         this.fireBase.push(kid);
+        this.updateDatabase();
+        this.newKidName = '';
+        
     }
     
     $scope.addClicked = function(kid) {
