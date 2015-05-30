@@ -20,15 +20,16 @@ app.controller('mainController', function($scope) {
     };
     
     function setUsername(username) {
-     var myDataRef = new Firebase('https://glaring-torch-8337.firebaseio.com/' + username);
+        $scope.fireBase = myDataRef = new Firebase('https://glaring-torch-8337.firebaseio.com/' + username);
         
         myDataRef.on("value", function(snapshot) {
+            console.log("Firebase update!");
           console.log(snapshot.val());
         }, function (errorObject) {
           console.log("The read failed: " + errorObject.code);
         });
 
-        myDataRef.push({username: username, something: 'else'});
+        myDataRef.push();
         
         var existing = myDataRef.child('families').child(username);
         
@@ -56,12 +57,16 @@ app.controller('mainController', function($scope) {
     
     $scope.addKidSubmitted = function() {
         this.showKidForm = false;
-        $scope.kids.push({ name: this.newKidName, points: 0 });
+        var kid = { name: this.newKidName, points: 0 };
+        $scope.kids.push(kid);
         this.newKidName = '';
+        this.fireBase.push(kid);
     }
     
     $scope.addClicked = function(kid) {
-        kid.points += 1;  
+        kid.points += 1;
+        var hopperRef = this.fireBase.child(kid.name);
+        hopperRef.update(kid);
     };
     
     $scope.removeClicked = function(kid) {
