@@ -60,17 +60,22 @@ app.controller('mainController', function($scope) {
     
     $scope.addClicked = function(kid) {
         kid.points += 1;
-        var hopperRef = this.fireBase.child(kid.name);
-        hopperRef.update(kid);
+        this.updateDatabase();
     };
     
     $scope.removeClicked = function(kid) {
         kid.points -= 1;  
+        this.updateDatabase();
     };
     
     $scope.deleteClicked = function(kid) {
         $scope.kids = $scope.kids.splice($scope.kids.indexOf(kid), 1);
+        this.updateDatabase();
     };
+    
+    $scope.updateDatabase = function() {
+           this.fireBase.set(this.kids);
+    }
 });
 
 app.config(function($routeProvider){
