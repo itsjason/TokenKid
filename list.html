@@ -1,19 +1,21 @@
 <h2>List for {{id}}</h2>
 
-<table>
+<table class="table">
     <thead>
-        <th>Kids Name</th>
-        <th>Points</th>
-        <th>Do Other Stuff</th>
+        <tr>
+            <th>Kids Name</th>
+            <th>Points</th>
+            <th>Do Other Stuff</th>
+        </tr>
     </thead>
     <tbody>
         <tr ng-repeat="kid in kids">
             <td>{{kid.name}}</td>
             <td>{{kid.points}}</td>
             <td>
-                <a ng-click="addClicked(kid)">+</a>
-                <a ng-click="removeClicked(kid)">+</a>
-                <a ng-click="deleteClicked(kid)">X</a>
+                <a class="btn btn-primary" ng-click="addClicked(kid)">+</a>
+                <a class="btn btn-primary" ng-click="removeClicked(kid)">+</a>
+                <a class="btn btn-primary" ng-click="deleteClicked(kid)">X</a>
             </td>
         </tr>
     </tbody>
