@@ -1,11 +1,11 @@
- var app = angular.module('tokenKidApp', ['ngRoute']);
+var app = angular.module('tokenKidApp', ['ngRoute']);
 
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope) {
 
     $scope.showUsername = false;
     $scope.kids = [];
-    
+    setTimeout(function() { var a = document.getElementById("username"); if(a) a.focus(); }, 100);
     var savedUsername = localStorage.getItem("username");
     if(savedUsername) {
         $scope.usernameText = savedUsername;
@@ -24,22 +24,16 @@ app.controller('mainController', function($scope) {
         
         myDataRef.on("value", function(snapshot) {
             console.log("Firebase update!");
+            $scope.kids = snapshot.val();
+            $scope.$apply();
           console.log(snapshot.val());
         }, function (errorObject) {
           console.log("The read failed: " + errorObject.code);
         });
-
-        myDataRef.push();
         
-        var existing = myDataRef.child('families').child(username);
+        localStorage.setItem("username", username);
         
-        console.log(existing);
-        
-        var id = myDataRef.child('families').child(username).name();
-        
-        localStorage.setItem("username", id);
-        
-        $scope.id = id;
+        $scope.id = username;
         window.location.href = "/#/list";   
     };
     
@@ -52,6 +46,7 @@ app.controller('mainController', function($scope) {
     
     $scope.addKidClicked = function() {
         this.showKidForm = true;
+        document.getElementById("kidNameField").focus();
         return false;
     };
     

@@ -23,6 +23,6 @@
 <a ng-click="addKidClicked()">Add Kid</a>
 <form ng-submit="addKidSubmitted()" ng-show="showKidForm">
     <label for="kidNameField">Kid Name</label>
-    <input type="text" id="kidNameField" ng-model="newKidName" />
+    <input type="text" id="kidNameField" ng-model="newKidName" auto-focus />
     <input type="button" value="Add Kid" ng-click="addKidSubmitted()" />
 </form>
