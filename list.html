@@ -10,7 +10,11 @@
         <tr ng-repeat="kid in kids">
             <td>{{kid.name}}</td>
             <td>{{kid.points}}</td>
-            <td>+ - X</td>
+            <td>
+                <a ng-click="addClicked(kid)">+</a>
+                <a ng-click="removeClicked(kid)">+</a>
+                <a ng-click="deleteClicked(kid)">X</a>
+            </td>
         </tr>
     </tbody>
 </table>

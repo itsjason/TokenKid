@@ -36,7 +36,6 @@ app.controller('mainController', function($scope) {
     }
     
     $scope.addKidClicked = function() {
-        alert('skf');
         this.showKidForm = true;
         return false;
     };
@@ -46,6 +45,18 @@ app.controller('mainController', function($scope) {
         $scope.kids.push({ name: this.newKidName, points: 0 });
         this.newKidName = '';
     }
+    
+    $scope.addClicked = function(kid) {
+        kid.points += 1;  
+    };
+    
+    $scope.removeClicked = function(kid) {
+        kid.points -= 1;  
+    };
+    
+    $scope.deleteClicked = function(kid) {
+        $scope.kids = $scope.kids.splice($scope.kids.indexOf(kid), 1);
+    };
 });
 
 app.config(function($routeProvider){
