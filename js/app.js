@@ -3,28 +3,58 @@
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope) {
 
+    $scope.kids = [];
+    
     // create a message to display in our view
     //$scope.username = 'Everyone come and see how good I look!';
     
     $scope.loginClicked = function() {
-        var myDataRef = new Firebase('https://glaring-torch-8337.firebaseio.com/');
-        //myDataRef.push({username: this.usernameText, something: 'else'});
+        var myDataRef = new Firebase('https://glaring-torch-8337.firebaseio.com/' + this.usernameText);
         
-        var id = myDataRef.child('families').push({username: this.usernameText, something: 'else'}).name();
+        myDataRef.on("value", function(snapshot) {
+          console.log(snapshot.val());
+        }, function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        });
+
+        myDataRef.push({username: this.usernameText, something: 'else'});
+        
+        var existing = myDataRef.child('families').child(this.usernameText);
+        
+        console.log(existing);
+        
+        var id = myDataRef.child('families').child(this.usernameText).name();
         $scope.id = id;
         window.location.href = "/#/list";
     };
     
-
+    var findUsersMatchingEmail = function(emailAddress, callback ) {
+        fb.child('families').startAt(emailAddress).endAt(emailAddress).once('value', function(snap) {
+            // the keys are the user ids, the values are objects containing each user record that matched (presumably 1?)
+            callback( snap.val() || {} );
+        });
+    }
+    
+    $scope.addKidClicked = function() {
+        alert('skf');
+        this.showKidForm = true;
+        return false;
+    };
+    
+    $scope.addKidSubmitted = function() {
+        this.showKidForm = false;
+        $scope.kids.push({ name: this.newKidName, points: 0 });
+        this.newKidName = '';
+    }
 });
 
 app.config(function($routeProvider){
-      $routeProvider
-          .when('/',{
-                templateUrl: 'login.html'
-          })
-          .when('/list',{
-                templateUrl: 'list.html'
-          });
+  $routeProvider
+      .when('/',{
+            templateUrl: 'login.html'
+      })
+      .when('/list',{
+            templateUrl: 'list.html'
+      });
 });
 

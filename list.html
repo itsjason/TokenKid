@@ -7,7 +7,16 @@
         <th>Do Other Stuff</th>
     </thead>
     <tbody>
-        
+        <tr ng-repeat="kid in kids">
+            <td>{{kid.name}}</td>
+            <td>{{kid.points}}</td>
+            <td>+ - X</td>
+        </tr>
     </tbody>
 </table>
-<a href="#" ng-click="addKidClicked()">Add Kid</a>
+<a ng-click="addKidClicked()">Add Kid</a>
+<form ng-submit="addKidSubmitted()" ng-show="showKidForm">
+    <label for="kidNameField">Kid Name</label>
+    <input type="text" id="kidNameField" ng-model="newKidName" />
+    <input type="button" value="Add Kid" ng-click="addKidSubmitted()" />
+</form>
